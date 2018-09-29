@@ -13,6 +13,7 @@ body {
 }
 
 .jumbotron {
+    background-color: black;
     background-image: url("../images/train3_1000.jpg");
     background-repeat: no-repeat;
     background-position: center;
@@ -26,6 +27,18 @@ body {
 
    .card-header, .table, form {
     font-family: 'Montserrat', sans-serif;
+
+   }
+
+   td {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.9em;
+    text-align: center;
+   }
+
+   tr {
+    text-align: center;
+    font-size: 0.8em;
 
    }
 /* thead {
