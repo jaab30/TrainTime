@@ -1,0 +1,47 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+    }
+*, *:before, *:after {
+    box-sizing: inherit;
+    }
+
+body {
+   background-color: rgb(17, 17, 17, 0.9);
+   background-image: url("../images/gplaypattern.png");
+   
+}
+
+.jumbotron {
+    background-image: url("../images/train3_1000.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+   h1, p {
+
+    font-family: 'Montserrat', sans-serif;
+
+   }
+
+   .card-header, .table, form {
+    font-family: 'Montserrat', sans-serif;
+
+   }
+/* thead {
+    border: solid 1px black;
+    background-color: rgb(187, 187, 187);
+
+} */
+
+
+
+
+
+
+
+
+   /* font-family: 'Abril Fatface', cursive;
+font-family: 'Montserrat', sans-serif;
+font-family: 'Raleway', sans-serif;
+font-family: 'Dosis', sans-serif; */

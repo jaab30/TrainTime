@@ -1,0 +1,212 @@
+<!doctype <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Train Time</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- reset css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- link to font -->
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Dosis:400,600,700,800|Montserrat:400,500|Raleway:400,500" rel="stylesheet">
+    <!-- link to css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+     <!-- Link to Moment.js should go here -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+
+</head>
+
+<body>
+    <header class="container-fluid text-center p-3">
+           
+    </header>
+    <main class="container-fluid">
+        <div class="jumbotron jumbotron-fluid p-3 mb-2 text-white bg-transparent">
+            <div class="container text-center ">
+                <h1 class="display-4 text-center">It's Train Time...!</h1>
+                <p class="lead font-weight-light">Find out when your next Train is coming... </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-dark text-center text-light mt-2">
+                    Current Train Schedule
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="mainTable">
+                            <thead>
+                                <tr class="title-row font-weight-bold table-light">
+                                    <th>Train Name</th>
+                                    <th>Destination</th>
+                                    <th>Frequency (min)</th>
+                                    <th>Next Arrival</th>
+                                    <th>Minutes Away</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-results">
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>@mdo</td>
+                                </tr>
+                            </tbody> 
+                        </table>
+                    </div>
+                </div>
+                <div class="card mb-5">
+                    <div class="card-header bg-dark text-center text-light">
+                    Add Train
+                    </div>
+                    <div class="card-body p-5">
+                        <form role="form-group"> 
+                            <div class="form-group row">
+                                <label for="train-input">Train Name</label>
+                                <input class="form-control" id="train-input" type="text">
+                            </div>
+                            <div class="form-group row">
+                                <label for="destination-input">Destination</label>
+                                <input class="form-control" id="destination-input" type="text">
+                            </div>
+                            <div class="form-group row">
+                                <label for="time-input">First Train Time (HH:mm - military) time</label>
+                                <input class="form-control" id="time-input" type="text">
+                            </div>
+                            <div class="form-group row">
+                                    <label for="frequency-input">Frequency (min)</label>
+                                    <input class="form-control" id="frequency-input" type="number">
+                            </div>
+                        
+                            <button class="btn btn-default bg-secondary text-light" id="add-train" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+    <script type="text/javascript">
+
+        var config = {
+            apiKey: "AIzaSyCuZUZ8jF_7IpegKWwdNw0Yc5OKFmRXDPY",
+            authDomain: "traintime-638d3.firebaseapp.com",
+            databaseURL: "https://traintime-638d3.firebaseio.com",
+            projectId: "traintime-638d3",
+            storageBucket: "traintime-638d3.appspot.com",
+            messagingSenderId: "223055511661"
+            };
+
+            firebase.initializeApp(config);
+
+        var database = firebase.database();
+
+
+        // var name = "";
+        // var role = "";
+        // var start = "";
+        // var rate = "";
+
+
+                        
+    $("#add-employee").on("click", function(event){
+        event.preventDefault();
+
+        var name = $("#name-input").val().trim();
+        var role = $("#role-input").val().trim();
+        var start = $("#start-input").val().trim();
+        var rate = $("#rate-input").val().trim();
+
+
+        console.log(name,role,start,rate)
+
+        // $("#name").text(name);
+        // $("#role").text(role);
+        // $("#start-date").text(start);
+        // $("#month-worked").text(rate);
+        // database.ref().push({
+        //     name: name,
+        //     role: role,
+        //     date: start,
+        //     rate: rate
+        // })
+
+        $("#name-input").val("")
+        $("#role-input").val("")
+        $("#start-input").val("")
+        $("#rate-input").val("")
+    })
+
+
+    //  database.ref().on("child_added", function(childresponse) {
+
+    //      name = childresponse.val().name,
+    //      role = childresponse.val().role,
+    //      date = childresponse.val().date,
+    //      rate = childresponse.val().rate
+
+        tableDiv = $("<tr>")
+        nameRow = $("<td>")
+        roleRow = $("<td>")
+        dateRow = $("<td>")
+        monthWorkedRow = $("<td>")
+        rateRow = $("<td>")
+        totalBilledRow = $("<td>")
+
+
+        nameRow.text(childresponse.val().name);
+        roleRow.text(childresponse.val().role);
+        dateRow.text(childresponse.val().date);
+        monthWorkedRow.text("")
+        rateRow.text(childresponse.val().rate);
+        totalBilledRow.text("")
+
+        tableDiv.append(nameRow, roleRow,dateRow,monthWorkedRow,rateRow,totalBilledRow )
+        $("#mainTable").append(tableDiv)
+
+
+      // Handle the errors
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    });
+
+        moment().startOf('year')
+        console.log(moment().startOf('year'))
+
+
+
+
+        var date1 = moment('2016-10-08 10:29:23');
+        var date2 = moment('2016-10-08 11:06:55');
+        var diff = date2.diff(date1);
+
+        moment().fromNow()
+
+
+    </script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+
+</body>
+</html>
