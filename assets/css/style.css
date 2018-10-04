@@ -17,10 +17,9 @@ body {
     background-image: url("../images/train3_1000.jpg");
     background-repeat: no-repeat;
     background-position: center;
-
 }
-   h1, p {
 
+   h1, p {
     font-family: 'Montserrat', sans-serif;
     /* box-shadow: 2px 2px 10px black; */
     color: white;
@@ -29,12 +28,16 @@ body {
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
-
    }
 
    .card-header, .table, form {
     font-family: 'Montserrat', sans-serif;
+   }
 
+   table {
+    width: 30px;
+    padding: 0;
+    margin-right: 30px;  
    }
 
    td {
@@ -53,12 +56,6 @@ body {
     padding: 0;
     margin: 0;
     width: 10px;
-   }
-
-   table {
-    width: 30px;
-    padding: 0;
-    margin-right: 30px;  
    }
 
    th {

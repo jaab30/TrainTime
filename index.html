@@ -23,8 +23,10 @@
     </head>
 
     <body>
+
+        <!-- Jumbotron with picture and header -->
         <main class="container-fluid">
-            <div class="jumbotron jumbotron-fluid p-3 mb-2 text-white bg-transparent">
+            <div class="jumbotron jumbotron-fluid p-3 mb-2 mt-2 text-white bg-transparent">
                 <div class="container text-center ">
                     <h1 class="display-4 text-center">It's Train Time!</h1>
                     <p class="lead font-weight-light">Find out when your next Train is coming... </p>
@@ -34,6 +36,7 @@
                 <div class="col-sm-2">
                 </div>
                 <div class="col-lg-8">
+                    <!-- Table with results -->
                     <div class="card mb-4">
                         <div class="card-header bg-dark text-center text-light mt-2">
                         Current Train Schedule
@@ -62,6 +65,7 @@
             <div class="row">
                     <div class="col-sm-3">
                     </div>
+                    <!-- Form to add train info -->
                     <div class="col-lg-6">
                         <div class="card mb-5">
                             <div class="card-header bg-dark text-center text-light">
@@ -95,10 +99,12 @@
                 </div>
             </div>
         </main>
-
+        <!-- link to Firebase -->
         <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
-        <script type="text/javascript">
 
+
+        <script type="text/javascript">
+        // FIrebase config Info
             var config = {
                 apiKey: "AIzaSyCuZUZ8jF_7IpegKWwdNw0Yc5OKFmRXDPY",
                 authDomain: "traintime-638d3.firebaseapp.com",
@@ -109,80 +115,73 @@
                 };
 
                 firebase.initializeApp(config);
-
+            
             var database = firebase.database();
-
-                            
+            
+        //  What happens when we click the submit train info button           
         $("#add-train").on("click", function(event){
+        // prevent reloading the page
             event.preventDefault();
-
+        // creating Variables to hold the input field information                   
             var trainName = $("#train-input").val().trim();
             var destination = $("#destination-input").val().trim();
             var time = $("#time-input").val().trim();
             var frequency = $("#frequency-input").val().trim();
-
+        // insert the results into our Firebase database
             database.ref().push({
                 trainName: trainName,
                 destination: destination,
                 time: time,
                 frequency: frequency
             })
-
+         // clear the input fields
             $("#train-input").val("")
             $("#destination-input").val("")
             $("#time-input").val("")
             $("#frequency-input").val("")
         })
 
-
+        //call the information stored on the data base
         database.ref().on("child_added", function(childresponse) {
-
+        // hold the information from the database on the variables
             trainName = childresponse.val().trainName,
             destination = childresponse.val().destination,
             time = childresponse.val().time,
             frequency = childresponse.val().frequency
-
+        //creating the html tags to display the info from the database
             tableContainer = $("<tr>")
             trainCol = $("<td>")
             destinationCol = $("<td>")
             frequencyCol = $("<td>")
             nextArrivalCol = $("<td>")
             minutesAwayCol = $("<td id='minutes'>")
-
-
+            //display info from database
             trainCol.text(childresponse.val().trainName);
             destinationCol.text(childresponse.val().destination);
             frequencyCol.text(childresponse.val().frequency);
             
-
+            // append the info to the div with the ID of table-result for diplay
             tableContainer.append(trainCol, destinationCol,frequencyCol,nextArrivalCol,minutesAwayCol)
             $("#table-results").append(tableContainer)
-
+            //set up our current time one year earlier to make sure the original time is before than the second time
             var firstTrainTimeConverted = moment(time, "HH:mm").subtract(1, "years");
-
+            // hold the current time inside a variable
             var currentTime = moment();
-
+            // calculate the difference bewteen current time and the time for the first ttrain out
             var subtTime = moment().diff(moment(firstTrainTimeConverted), "minutes");
-
+            //divide the difference in time by the frequency of the trains
             var division = subtTime % frequency;
-
+            // subtract the the frequncy by the results of our division (modulus)
             var nextArrival = frequency - division;
-
+            // add the m inutes from Next arrival to the current time       
             var nextTrain = moment().add(nextArrival, "minutes");
-
+            // diplay the results
             nextArrivalCol.text(moment(nextTrain).format("hh:mm a"));
             minutesAwayCol.text(nextArrival);
 
         }, function(errorObject) {
         console.log("Errors handled: " + errorObject.code);
         });
-
-        setInterval(update(),10000); 
- 
-            function update(){
-                $('#minutes').load(nextArrival);
-            }
-
 
         </script>
 
